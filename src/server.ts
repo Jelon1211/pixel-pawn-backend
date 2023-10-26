@@ -1,15 +1,18 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 require("express-async-errors");
-export const express = require("express");
+import express from "express";
 const app = express();
-const path = require("path");
-const { logger, logEvents } = require("../src/middleware/logger");
-const errorHandler = require("../src/middleware/errorHandler");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const corsOptions = require("../config/corsOptions");
-const connectDB = require("../config/dbConn");
-const mongoose = require("mongoose");
+import path from "path";
+import { errorHandler } from "./middleware/errorHandler";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import { corsOptions } from "../config/corsOptions";
+import { connectDB } from "../config/dbConn";
+import mongoose from "mongoose";
+import { logger } from "./middleware/logger";
+import rootRoutes from "./routes/root";
+import authRoutes from "./routes/authRoutes";
 
 const PORT = process.env.PORT || 9000;
 
@@ -28,9 +31,9 @@ app.use(cookieParser());
 
 app.use("/styles", express.static(path.join(__dirname, "public/styles")));
 
-app.use("/", require("./routes/root"));
+app.use("/", rootRoutes);
 
-app.use("/auth", require("../src/routes/authRoutes"));
+app.use("/auth", authRoutes);
 
 app.all("*", (req: any, res: any) => {
   res.status(404);
