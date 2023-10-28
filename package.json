@@ -1,7 +1,7 @@
 {
   "name": "pixel-pawn-backend",
   "version": "0.0.2",
-  "description": "",
+  "description": "Backend for PixelPawns",
   "main": "server.ts",
   "scripts": {
     "build": "tsc",
