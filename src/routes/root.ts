@@ -1,9 +1,10 @@
-import { express } from "../server";
-const router = express.Router();
-const path = require("path");
+import { Router } from "express";
+const router = Router();
+import { join } from "path";
+import { Request, Response } from "express";
 
-router.get("^/$|index(.html)?", (reg: any, res: any) => {
-  res.sendFile(path.join(__dirname, "..", "views", "index.html"));
+router.get("^/$|index(.html)?", (req: Request, res: Response) => {
+  res.sendFile(join(__dirname, "..", "views", "index.html"));
 });
 
-module.exports = router;
+export default router;
