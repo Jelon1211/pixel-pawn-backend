@@ -3,3 +3,5 @@ export interface IUser {
   password: string;
   username: string;
 }
+
+export type ErrorMessage = { message: string };

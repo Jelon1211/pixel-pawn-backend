@@ -13,6 +13,7 @@ import mongoose from "mongoose";
 import { logger, logEvents } from "./middleware/logger";
 import rootRoutes from "./routes/root";
 import authRoutes from "./routes/authRoutes";
+import userRoutes from "./routes/userRoutes";
 
 const PORT = process.env.PORT || 9000;
 
@@ -34,6 +35,8 @@ app.use("/styles", express.static(path.join(__dirname, "public/styles")));
 app.use("/", rootRoutes);
 
 app.use("/auth", authRoutes);
+
+app.use("/users", userRoutes);
 
 app.all("*", (req: any, res: any) => {
   res.status(404);

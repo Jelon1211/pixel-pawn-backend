@@ -1,7 +1,5 @@
-import mongoose, { Document, Model } from "mongoose";
+import mongoose, { Document, model } from "mongoose";
 import { IUser } from "../types/user";
-
-interface IUserModel extends IUser, Document {}
 
 const userSchema = new mongoose.Schema<IUser>({
   firstname: {
@@ -18,9 +16,6 @@ const userSchema = new mongoose.Schema<IUser>({
   },
 });
 
-const UserModel: Model<IUserModel> = mongoose.model<IUserModel>(
-  "User",
-  userSchema
-);
+const UserModel = model<IUser>("User", userSchema);
 
 export default UserModel;
