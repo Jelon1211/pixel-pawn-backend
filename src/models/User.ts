@@ -1,26 +1,26 @@
-const mongoose = require('mongoose')
+import mongoose, { Document, Model } from "mongoose";
+import { IUser } from "../types/user";
 
-const userSchema = new mongoose.Schema({
-    firstname: {
-        type: String,
-        required: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    username: {
-        type: String,
-        required: true,
-    },
-    // roles: {
-    //     type: [String],
-    //     default: ["Employee"],
-    // },
-    // active: {
-    //     type: Boolean,
-    //     default: true
-    // }
+interface IUserModel extends IUser, Document {}
+
+const userSchema = new mongoose.Schema<IUser>({
+  firstname: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
 });
 
-module.exports = mongoose.model('User', userSchema)
+const UserModel: Model<IUserModel> = mongoose.model<IUserModel>(
+  "User",
+  userSchema
+);
+
+export default UserModel;

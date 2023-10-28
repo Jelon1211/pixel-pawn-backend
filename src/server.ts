@@ -10,13 +10,13 @@ import cors from "cors";
 import { corsOptions } from "../config/corsOptions";
 import { connectDB } from "../config/dbConn";
 import mongoose from "mongoose";
-import { logger } from "./middleware/logger";
+import { logger, logEvents } from "./middleware/logger";
 import rootRoutes from "./routes/root";
 import authRoutes from "./routes/authRoutes";
 
 const PORT = process.env.PORT || 9000;
 
-// connectDB();
+connectDB();
 
 app.use(logger);
 
@@ -48,19 +48,15 @@ app.all("*", (req: any, res: any) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+mongoose.connection.once("open", () => {
+  console.log("Connected to MongoDB");
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
 
-// mongoose.connection.once("open", () => {
-//   console.log("Connected to MongoDB");
-//   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-// });
-
-// mongoose.connection.on("error", (err) => {
-//   console.log(err);
-//   logEvents(
-//     `${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`,
-//     "mongoErrLog.log"
-//   );
-// });
+mongoose.connection.on("error", (err) => {
+  console.log(err);
+  logEvents(
+    `${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`,
+    "mongoErrLog.log"
+  );
+});
