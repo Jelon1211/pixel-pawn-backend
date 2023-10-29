@@ -8,8 +8,8 @@ const getUser = async (
   req: Request<IUser>,
   res: Response<IUser | ErrorMessage>
 ) => {
-  const username = req.body.username;
-  const user = await User.findOne({ username: username }).exec();
+  const email = req.body.email;
+  const user = await User.findOne({ email: email }).exec();
 
   if (!user) {
     return res.status(404).json({ message: "User not found" });
@@ -22,26 +22,26 @@ const createNewUser = async (
   req: Request<IUser>,
   res: Response<IUser | ErrorMessage>
 ) => {
-  const { firstname, password, username } = req.body;
+  const { name, password, email } = req.body;
 
-  if (!firstname || !password || !username) {
+  if (!name || !password || !email) {
     return res.status(400).json({ message: "All fields are required!" });
   }
 
-  const duplicate = await User.findOne({ username }).lean().exec();
+  const duplicate = await User.findOne({ email }).lean().exec();
 
   if (duplicate) {
-    return res.status(409).json({ message: "Duplicate username" });
+    return res.status(409).json({ message: "Duplicate email" });
   }
 
   const hashedPwd = await bcrypt.hash(password, 10);
 
-  const userObject = { firstname, password: hashedPwd, username };
+  const userObject = { name, password: hashedPwd, email };
 
   const user = await User.create(userObject);
 
   if (user) {
-    res.status(201).json({ message: `New user ${username} created` });
+    res.status(201).json({ message: `New user ${email} created` });
   } else {
     res.status(400).json({ message: "Invalid user data recived" });
   }

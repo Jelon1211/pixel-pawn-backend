@@ -1,7 +1,7 @@
 export interface IUser {
-  firstname: string;
+  name: string;
   password: string;
-  username: string;
+  email: string;
 }
 
 export type ErrorMessage = { message: string };

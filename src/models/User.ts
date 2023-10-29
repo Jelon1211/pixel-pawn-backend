@@ -2,7 +2,7 @@ import mongoose, { Document, model } from "mongoose";
 import { IUser } from "../types/user";
 
 const userSchema = new mongoose.Schema<IUser>({
-  firstname: {
+  name: {
     type: String,
     required: true,
   },
@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema<IUser>({
     type: String,
     required: true,
   },
-  username: {
+  email: {
     type: String,
     required: true,
   },
