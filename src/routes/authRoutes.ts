@@ -1,7 +1,12 @@
 import { Router } from "express";
 const router = Router();
-import { test } from "../controllers/authController";
+import { login, refresh, logout } from "../controllers/authController";
+import loginLimiter from "../middleware/loginLimiter";
 
-router.route("/test").get(test);
+router.route("/").post(loginLimiter, login);
+
+router.route("/refresh").get(refresh);
+
+router.route("/logout").post(logout);
 
 export default router;

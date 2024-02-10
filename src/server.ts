@@ -25,7 +25,7 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 
-// // Accept body data
+// Accept body data
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
