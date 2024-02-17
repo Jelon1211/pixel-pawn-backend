@@ -23,6 +23,10 @@ const pawnSchema = new mongoose.Schema<IPawn>({
     required: true,
     enum: Object.values(PawnType),
   },
+  img: {
+    type: String,
+    required: true,
+  },
 });
 
 const PawnModel = model<IPawn>("Pawn", pawnSchema);

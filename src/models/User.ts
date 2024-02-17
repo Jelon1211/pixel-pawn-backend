@@ -1,4 +1,4 @@
-import mongoose, { Document, model } from "mongoose";
+import mongoose, { Document, Schema, model } from "mongoose";
 import { IUser } from "../types/user";
 
 const userSchema = new mongoose.Schema<IUser>({
@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema<IUser>({
     type: Boolean,
     required: true,
   },
+  pawns: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Pawn'
+  }],
 });
 
 const UserModel = model<IUser>("User", userSchema);

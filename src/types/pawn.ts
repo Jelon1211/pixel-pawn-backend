@@ -4,11 +4,14 @@ export enum PawnType {
 }
 
 export interface IPawn {
+  _id?: any;
   name: string;
   description: string;
   hp: number;
   atk: number;
   type: PawnType;
+  img: string;
+  userId?: string;
 }
 
 export type ErrorMessage = { message: string };

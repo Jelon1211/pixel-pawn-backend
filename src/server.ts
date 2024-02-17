@@ -14,6 +14,7 @@ import { logger, logEvents } from "./middleware/logger";
 import rootRoutes from "./routes/root";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
+import pawnRoutes from "./routes/pawnRoutes";
 
 const PORT = process.env.PORT || 9000;
 
