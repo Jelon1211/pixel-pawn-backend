@@ -1,11 +1,11 @@
 import express from "express";
 const router = express.Router();
-import { createNewPawn } from "../controllers/pawnsController";
+import { createNewPawn, getPawnsForUser } from "../controllers/pawnsController";
 
 import { verifyJWT } from "../middleware/verifyJWT";
 
 router.use(verifyJWT);
 
-router.route("/").post(createNewPawn);
+router.route("/").get(getPawnsForUser).post(createNewPawn);
 
 export default router;

@@ -36,4 +36,21 @@ const createNewPawn = async (
   }
 };
 
-export { createNewPawn };
+const getPawnsForUser = async (req: Request, res: Response) => {
+  const { userId } = req.body;
+
+  try {
+    const userWithPawns = await User.findById(userId).populate("pawns");
+
+    if (!userWithPawns) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    return res.status(200).json(userWithPawns.pawns);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error fetching pawns for user." });
+  }
+};
+
+export { createNewPawn, getPawnsForUser };
