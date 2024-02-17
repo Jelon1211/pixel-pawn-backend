@@ -27,6 +27,10 @@ const pawnSchema = new mongoose.Schema<IPawn>({
     type: String,
     required: true,
   },
+  isAlive: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const PawnModel = model<IPawn>("Pawn", pawnSchema);

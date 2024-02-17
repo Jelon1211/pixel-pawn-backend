@@ -18,7 +18,7 @@ const login = asyncHandler(async (req, res: any) => {
 
   console.log(foundUser);
 
-  if (!foundUser || !foundUser.active) {
+  if (!foundUser || !foundUser.isActive) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
@@ -88,7 +88,7 @@ const refresh = (req: Request, res: Response) => {
             },
           },
           process.env.ACCESS_TOKEN_SECRET!,
-          { expiresIn: "15m" }
+          { expiresIn: "30m" }
         );
 
         res.json({ accessToken });

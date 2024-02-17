@@ -22,9 +22,9 @@ const createNewUser = async (
   req: Request<IUser>,
   res: Response<IUser | ErrorMessage>
 ) => {
-  const { name, password, email } = req.body;
+  const { name, password, email, isActive } = req.body;
 
-  if (!name || !password || !email) {
+  if (!name || !password || !email || !isActive) {
     return res.status(400).json({ message: "All fields are required!" });
   }
 
@@ -36,7 +36,7 @@ const createNewUser = async (
 
   const hashedPwd = await bcrypt.hash(password, 10);
 
-  const userObject = { name, password: hashedPwd, email };
+  const userObject = { name, password: hashedPwd, email, isActive };
 
   const user = await User.create(userObject);
 

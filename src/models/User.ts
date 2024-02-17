@@ -14,14 +14,16 @@ const userSchema = new mongoose.Schema<IUser>({
     type: String,
     required: true,
   },
-  active: {
+  isActive: {
     type: Boolean,
     required: true,
   },
-  pawns: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Pawn'
-  }],
+  pawns: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Pawn",
+    },
+  ],
 });
 
 const UserModel = model<IUser>("User", userSchema);

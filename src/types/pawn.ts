@@ -12,6 +12,7 @@ export interface IPawn {
   type: PawnType;
   img: string;
   userId?: string;
+  isAlive: boolean;
 }
 
 export type ErrorMessage = { message: string };
