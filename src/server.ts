@@ -38,6 +38,8 @@ app.use("/auth", authRoutes);
 
 app.use("/users", userRoutes);
 
+app.use("/pawns", pawnRoutes);
+
 app.all("*", (req: any, res: any) => {
   res.status(404);
   if (req.accepts("html")) {
