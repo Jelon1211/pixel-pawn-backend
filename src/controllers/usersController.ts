@@ -1,21 +1,24 @@
 import { Request, Response } from "express";
-
 import User from "../models/User";
 import bcrypt from "bcrypt";
 import { IUser, ErrorMessage } from "../types/user";
+import jwt from "jsonwebtoken";
 
-const getUser = async (
-  req: Request<IUser>,
-  res: Response<IUser | ErrorMessage>
-) => {
-  const email = req.body.email;
-  const user = await User.findOne({ email: email }).exec();
+const getUser = async (req: any, res: Response<any | ErrorMessage>) => {
+  try {
+    const foundUser = await User.findOne({ email: req.user }).exec();
 
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
+    console.log({ email: req.user });
+
+    if (!foundUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { password, ...userWithoutPassword } = foundUser.toObject();
+    res.json(userWithoutPassword);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
   }
-
-  res.json(user);
 };
 
 const createNewUser = async (
