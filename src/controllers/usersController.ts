@@ -2,7 +2,24 @@ import { Request, Response } from "express";
 import User from "../models/User";
 import bcrypt from "bcrypt";
 import { IUser, ErrorMessage } from "../types/user";
-import jwt from "jsonwebtoken";
+
+// @desc Auth routes
+// @route GET /users/auth
+// @access Public
+const getUserAuth = async (req: any, res: Response<any | ErrorMessage>) => {
+  try {
+    const foundUser = await User.findOne({ email: req.user }).exec();
+
+    if (!foundUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { password, ...userWithoutPassword } = foundUser.toObject();
+    res.json(userWithoutPassword.isActive);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 const getUser = async (req: any, res: Response<any | ErrorMessage>) => {
   try {
@@ -27,8 +44,12 @@ const createNewUser = async (
 ) => {
   const { name, password, email, isActive } = req.body;
 
-  if (!name || !password || !email || !isActive) {
-    return res.status(400).json({ message: "All fields are required!" });
+  if (!name || !password || !email || typeof isActive !== "boolean") {
+    return res
+      .status(400)
+      .json({
+        message: "All fields are required and isActive must be a boolean!",
+      });
   }
 
   const duplicate = await User.findOne({ email }).lean().exec();
@@ -50,4 +71,4 @@ const createNewUser = async (
   }
 };
 
-export { getUser, createNewUser };
+export { getUser, createNewUser, getUserAuth };

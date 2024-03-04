@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 9000;
 connectDB();
 
 // region TEST PURPOSE ONLY
-app.use(delayMiddleware);
+// app.use(delayMiddleware);
 //
 
 app.use(logger);

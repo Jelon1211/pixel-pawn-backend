@@ -5,8 +5,7 @@ export const delayMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  const delay = Math.random() * (5000 - 1000) + 1000;
-  console.log(delay);
+  const delay = Math.random() * (2000 - 500) + 1000;
   setTimeout(() => {
     next();
   }, delay);
