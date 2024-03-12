@@ -16,8 +16,6 @@ const login = asyncHandler(async (req, res: any) => {
 
   const foundUser = await User.findOne({ email }).exec();
 
-  console.log(foundUser);
-
   if (!foundUser || !foundUser.isActive) {
     return res.status(401).json({ message: "Unauthorized" });
   }
