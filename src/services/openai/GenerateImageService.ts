@@ -9,21 +9,13 @@ class GenerateImageService {
     });
   }
 
-  async createPawn(
-    prompt: string,
-    size:
-      | "256x256"
-      | "512x512"
-      | "1024x1024"
-      | "1792x1024"
-      | "1024x1792" = "256x256"
-  ) {
+  async createPawn(prompt: string) {
     try {
       const response = await this.openai.images.generate({
         prompt: prompt,
         model: "dall-e-2",
         n: 1,
-        size: size,
+        size: "256x256",
       });
 
       const image = response.data;

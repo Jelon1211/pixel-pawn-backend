@@ -6,6 +6,7 @@ class PawnMockService {
     name: string;
     description: string;
     userId: string;
+    image: string;
   }): Promise<IPawn> {
     const newPawn = new PawnModel({
       name: userData.name,
@@ -14,7 +15,7 @@ class PawnMockService {
       atk: this.generateRandomAtk(),
       type: this.randomType(),
       userId: userData.userId,
-      img: this.randomImg(10),
+      img: userData.image,
     });
 
     await newPawn.save();
@@ -33,17 +34,6 @@ class PawnMockService {
     const types = [PawnType.Air, PawnType.Ground];
     const randomIndex = Math.floor(Math.random() * types.length);
     return types[randomIndex];
-  }
-
-  private randomImg(length: number): string {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    let result = "";
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      result += characters[randomIndex];
-    }
-    return result;
   }
 }
 
