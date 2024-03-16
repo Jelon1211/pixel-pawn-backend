@@ -35,6 +35,8 @@ const createNewPawn = async (req: any, res: Response<any | ErrorMessage>) => {
     const pawnToBase = await convertImageToBase64(newPawn[0].url);
     const image = pawnToBase;
 
+    console.log(image);
+
     const pawnMockService = new PawnMockService();
 
     const randomPawn = await pawnMockService.createMockPawn({
