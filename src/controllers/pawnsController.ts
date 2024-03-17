@@ -58,14 +58,18 @@ const createNewPawn = async (req: any, res: Response<any | ErrorMessage>) => {
   }
 };
 
-const getPawnsForUser = async (req: Request, res: Response) => {
-  const { userId } = req.body;
+// GET
+const getPawnsForUser = async (req: any, res: Response) => {
+  const foundUser = await User.findOne({ email: req.user }).exec();
+  if (!foundUser) {
+    return res.status(404).json({ message: "User not found" });
+  }
 
   try {
-    const userWithPawns = await User.findById(userId).populate("pawns");
+    const userWithPawns = await User.findById(foundUser.id).populate("pawns");
 
     if (!userWithPawns) {
-      return res.status(404).json({ message: "User not found." });
+      return res.status(404).json({ message: "No pawns found for this user." });
     }
 
     return res.status(200).json(userWithPawns.pawns);
