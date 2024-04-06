@@ -1,23 +1,25 @@
 import { Request, Response } from "express";
 
 import User from "../models/User";
+import Pawn from "../models/Pawn";
 import { ErrorMessage, IPawn } from "../types/pawn";
 import PawnMockService from "../services/mock/PawnMockService";
-import OpenAI from "openai";
 import { convertImageToBase64 } from "../utils/convertToBase64";
 import GenerateImageService from "../services/openai/GenerateImageService";
 
 // POST
 const createNewPawn = async (req: any, res: Response<any | ErrorMessage>) => {
-  const { name, description, userId } = req.body;
-
-  if (!name || !description || !userId) {
-    return res.status(400).json({ message: "All fields are required!" });
-  }
+  const { name, description } = req.body;
 
   const foundUser = await User.findOne({ email: req.user }).exec();
   if (!foundUser) {
     return res.status(404).json({ message: "User not found" });
+  }
+
+  const userId = foundUser.id;
+
+  if (!name || !description || !userId) {
+    return res.status(400).json({ message: "All fields are required!" });
   }
 
   const generateImageService = new GenerateImageService();
@@ -33,9 +35,8 @@ const createNewPawn = async (req: any, res: Response<any | ErrorMessage>) => {
       return res.status(500).json({ message: "Image URL is missing" });
     }
     const pawnToBase = await convertImageToBase64(newPawn[0].url);
-    const image = pawnToBase;
 
-    console.log(image);
+    const image = pawnToBase;
 
     const pawnMockService = new PawnMockService();
 
@@ -52,7 +53,9 @@ const createNewPawn = async (req: any, res: Response<any | ErrorMessage>) => {
       { new: false, upsert: true }
     );
 
-    return res.json(randomPawn);
+    setTimeout(() => {
+      return res.json(randomPawn);
+    }, 6000);
   } catch (err) {
     return res.status(500).json({ message: `Error creating new pawn. ${err}` });
   }
@@ -81,4 +84,16 @@ const getPawnsForUser = async (req: any, res: Response) => {
   }
 };
 
-export { createNewPawn, getPawnsForUser };
+// GET /pawns/:id
+const getSinglePawn = async (req: any, res: Response) => {
+  const { id } = req.params;
+  const foundPawn = await Pawn.findById(id).exec();
+
+  if (!foundPawn) {
+    return res.status(404).json({ message: "Pawn not found" });
+  }
+
+  return res.status(200).json(foundPawn);
+};
+
+export { createNewPawn, getPawnsForUser, getSinglePawn };
