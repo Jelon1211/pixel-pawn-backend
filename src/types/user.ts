@@ -6,6 +6,7 @@ export interface IUser {
   email: string;
   isActive: boolean;
   pawns?: Types.ObjectId[];
+  credits: Number;
 }
 
 export type ErrorMessage = { message: string };

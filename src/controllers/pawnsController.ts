@@ -35,6 +35,9 @@ const createNewPawn = async (req: any, res: Response<any | ErrorMessage>) => {
       return res.status(500).json({ message: "Image URL is missing" });
     }
     const pawnToBase = await convertImageToBase64(newPawn[0].url);
+    // const pawnToBase = await convertImageToBase64(
+    //   "https://www.pixelart.name/wp-content/uploads/2017/10/Pixel-art-64x64-tutorial.png"
+    // );
 
     const image = pawnToBase;
 

@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema<IUser>({
       ref: "Pawn",
     },
   ],
+  credits: {
+    type: Number,
+    required: true,
+    default: 2,
+  },
 });
 
 const UserModel = model<IUser>("User", userSchema);

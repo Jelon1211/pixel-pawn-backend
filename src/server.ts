@@ -15,7 +15,6 @@ import rootRoutes from "./routes/root";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 import pawnRoutes from "./routes/pawnRoutes";
-import { delayMiddleware } from "./middleware/delayMiddleware";
 
 const PORT = process.env.PORT || 9000;
 
