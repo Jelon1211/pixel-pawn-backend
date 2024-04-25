@@ -1,11 +1,8 @@
 # Work in progress
 
 Features yet to be implemented before release:
-**Routes**
-**JWT**
-**AI reqesuts**
 **WebSocket**
-**Logic for game**
+**Engine for game**
 
 ## Last update
 
