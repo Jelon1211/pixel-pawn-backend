@@ -9,7 +9,7 @@ Features yet to be implemented before release:
 
 ## Last update
 
-29/12/2023
+25/04/2024
 
 ### About
 
